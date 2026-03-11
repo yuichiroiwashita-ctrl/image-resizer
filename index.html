@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>画像リサイズくん - 簡単一括リサイズ・トリミング</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .drop-zone {
+            border: 2px dashed #cbd5e1;
+            transition: all 0.3s ease;
+        }
+
+        .drop-zone.drag-over {
+            border-color: #3b82f6;
+            background-color: #eff6ff;
+        }
+    </style>
+</head>
+
+<body class="bg-slate-50 min-h-screen p-4 md:p-8 font-sans text-slate-900">
+
+    <div class="max-w-4xl mx-auto">
+        <!-- Header -->
+        <div class="mb-8 text-center">
+            <h1 class="text-4xl font-extrabold text-blue-600 mb-2">画像リサイズくん</h1>
+            <p class="text-slate-600 font-medium">指定サイズに合わせて一括でリサイズ・トリミングを行います</p>
+        </div>
+
+        <!-- Size Settings -->
+        <div class="bg-white rounded-xl p-6 shadow-sm border border-slate-200 mb-6">
+            <h2 class="text-lg font-semibold mb-4 flex items-center gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-600" fill="none" viewBox="0 0 24 24"
+                    stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37a1.724 1.724 0 002.572-1.065z" />
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                </svg>
+                出力設定
+            </h2>
+            <div class="grid grid-cols-2 gap-4 mb-4">
+                <div>
+                    <label class="block text-sm font-medium text-slate-700 mb-1">幅 (Width) px</label>
+                    <input type="number" id="inputWidth" value="1920"
+                        class="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-slate-700 mb-1">高さ (Height) px</label>
+                    <input type="number" id="inputHeight" value="800"
+                        class="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                </div>
+            </div>
+
+            <div class="flex items-start gap-3 bg-slate-50 p-4 rounded-lg border border-slate-100">
+                <div class="flex items-center h-5">
+                    <input type="checkbox" id="keepAspect"
+                        class="w-4 h-4 text-blue-600 border-slate-300 rounded focus:ring-blue-500">
+                </div>
+                <div class="text-sm">
+                    <label for="keepAspect" class="font-medium text-slate-800">アスペクト比を維持してリサイズ（トリミングしない）</label>
+                    <p class="text-slate-500 mt-1 leading-relaxed">
+                        チェックを入れると、元の画像の内容をすべて残したまま、指定したサイズ内に収まるようリサイズします（余白が出る場合があります）。<br>
+                        チェックを外すと、指定したサイズいっぱいに画像を広げ、中央からはみ出した部分を切り取ります。
+                    </p>
+                </div>
+            </div>
+            <p class="text-xs text-slate-500 mt-3">※設定を変更した後に画像をアップロードしてください。</p>
+        </div>
+
+        <!-- Drop Zone -->
+        <div id="dropZone" class="drop-zone bg-white rounded-xl p-10 text-center cursor-pointer mb-8">
+            <div class="flex flex-col items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-slate-400 mb-4" fill="none"
+                    viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
+                <p class="text-lg text-slate-700 font-medium text-center">画像をドラッグ＆ドロップ、またはクリックして選択</p>
+                <p class="text-sm text-slate-500 mt-2">複数ファイルの一括処理が可能です</p>
+            </div>
+            <input type="file" id="fileInput" class="hidden" accept="image/*" multiple>
+        </div>
+
+        <!-- Controls -->
+        <div id="controls"
+            class="hidden mb-6 flex justify-between items-center bg-white p-4 rounded-lg shadow-sm border border-slate-200">
+            <div class="text-slate-700 font-medium">
+                処理済み: <span id="fileCount">0</span> 件
+            </div>
+            <div class="flex gap-2">
+                <button id="clearBtn"
+                    class="bg-slate-200 hover:bg-slate-300 text-slate-700 px-4 py-2 rounded-lg font-semibold transition">
+                    リストをクリア
+                </button>
+                <button id="downloadAllBtn"
+                    class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg font-semibold transition flex items-center gap-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd"
+                            d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z"
+                            clip-rule="evenodd" />
+                    </svg>
+                    ZIPで一括保存
+                </button>
+            </div>
+        </div>
+
+        <!-- Preview Area -->
+        <div id="previewContainer" class="grid grid-cols-1 gap-4">
+            <!-- JavaScript will inject previews here -->
+        </div>
+
+        <!-- Toast Notification -->
+        <div id="toast"
+            class="fixed bottom-8 left-1/2 -translate-x-1/2 bg-slate-800 text-white px-6 py-3 rounded-full shadow-xl opacity-0 transition-opacity pointer-events-none z-50">
+            メッセージ
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+
+    <script>
+        const dropZone = document.getElementById('dropZone');
+        const fileInput = document.getElementById('fileInput');
+        const previewContainer = document.getElementById('previewContainer');
+        const controls = document.getElementById('controls');
+        const fileCountSpan = document.getElementById('fileCount');
+        const downloadAllBtn = document.getElementById('downloadAllBtn');
+        const clearBtn = document.getElementById('clearBtn');
+        const toast = document.getElementById('toast');
+        const inputWidth = document.getElementById('inputWidth');
+        const inputHeight = document.getElementById('inputHeight');
+        const keepAspect = document.getElementById('keepAspect');
+
+        let processedImages = [];
+
+        // UI Events
+        dropZone.addEventListener('click', () => fileInput.click());
+
+        dropZone.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            dropZone.classList.add('drag-over');
+        });
+
+        dropZone.addEventListener('dragleave', () => {
+            dropZone.classList.remove('drag-over');
+        });
+
+        dropZone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            dropZone.classList.remove('drag-over');
+            handleFiles(e.dataTransfer.files);
+        });
+
+        fileInput.addEventListener('change', (e) => {
+            handleFiles(e.target.files);
+        });
+
+        clearBtn.addEventListener('click', () => {
+            processedImages = [];
+            previewContainer.innerHTML = '';
+            controls.classList.add('hidden');
+            fileInput.value = '';
+        });
+
+        async function handleFiles(files) {
+            const imageFiles = Array.from(files).filter(file => file.type.startsWith('image/'));
+            if (imageFiles.length === 0) return;
+
+            const targetW = parseInt(inputWidth.value) || 1920;
+            const targetH = parseInt(inputHeight.value) || 800;
+            const aspectMode = keepAspect.checked;
+
+            showToast(`${imageFiles.length}枚の画像を処理中...`);
+            controls.classList.remove('hidden');
+
+            for (const file of imageFiles) {
+                await processImage(file, targetW, targetH, aspectMode);
+            }
+
+            fileCountSpan.textContent = processedImages.length;
+        }
+
+        function processImage(file, targetW, targetH, aspectMode) {
+            return new Promise((resolve) => {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    const img = new Image();
+                    img.onload = () => {
+                        const canvas = document.createElement('canvas');
+                        const ctx = canvas.getContext('2d');
+
+                        let drawW, drawH, x, y;
+
+                        if (aspectMode) {
+                            // アスペクト比維持 (contain方式)
+                            const scale = Math.min(targetW / img.width, targetH / img.height);
+                            drawW = img.width * scale;
+                            drawH = img.height * scale;
+
+                            canvas.width = drawW;
+                            canvas.height = drawH;
+                            x = 0;
+                            y = 0;
+                        } else {
+                            // 指定サイズに合わせる (cover方式 / 中央トリミング)
+                            canvas.width = targetW;
+                            canvas.height = targetH;
+                            const scale = Math.max(targetW / img.width, targetH / img.height);
+                            drawW = img.width * scale;
+                            drawH = img.height * scale;
+                            x = (targetW / 2) - (drawW / 2);
+                            y = (targetH / 2) - (drawH / 2);
+                        }
+
+                        ctx.imageSmoothingEnabled = true;
+                        ctx.imageSmoothingQuality = 'high';
+
+                        ctx.drawImage(img, x, y, drawW, drawH);
+
+                        const dataUrl = canvas.toDataURL('image/jpeg', 0.85);
+                        const fileName = `${Math.round(canvas.width)}x${Math.round(canvas.height)}_${file.name.split('.')[0]}.jpg`;
+
+                        processedImages.push({ name: fileName, data: dataUrl });
+                        createPreviewElement(file.name, dataUrl, canvas.width, canvas.height);
+                        resolve();
+                    };
+                    img.src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            });
+        }
+
+        function createPreviewElement(originalName, dataUrl, w, h) {
+            const div = document.createElement('div');
+            div.className = "bg-white p-4 rounded-xl shadow-sm border border-slate-200";
+            div.innerHTML = `
+                <div class="flex flex-col sm:flex-row gap-4 items-center">
+                    <div class="w-full sm:w-48 flex-shrink-0 flex justify-center bg-slate-100 rounded border overflow-hidden">
+                        <img src="${dataUrl}" class="max-w-full h-auto max-h-32 object-contain" alt="Preview">
+                    </div>
+                    <div class="flex-grow min-w-0 text-center sm:text-left">
+                        <p class="text-sm font-semibold text-slate-800 truncate">${originalName}</p>
+                        <p class="text-xs text-slate-500 font-mono mt-1">${Math.round(w)} × ${Math.round(h)} px (JPEG)</p>
+                    </div>
+                    <div class="flex-shrink-0">
+                        <button onclick="downloadSingle('${dataUrl}', '${Math.round(w)}x${Math.round(h)}_${originalName.split('.')[0]}.jpg')" 
+                                class="flex items-center gap-1 text-sm bg-blue-50 text-blue-600 hover:bg-blue-100 px-3 py-2 rounded-lg transition font-medium">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                            </svg>
+                            個別に保存
+                        </button>
+                    </div>
+                </div>
+            `;
+            previewContainer.prepend(div);
+        }
+
+        window.downloadSingle = (url, name) => {
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = name;
+            link.click();
+        };
+
+        downloadAllBtn.addEventListener('click', async () => {
+            if (processedImages.length === 0) return;
+
+            const zip = new JSZip();
+            processedImages.forEach(img => {
+                const imageData = img.data.split(',')[1];
+                zip.file(img.name, imageData, { base64: true });
+            });
+
+            const content = await zip.generateAsync({ type: "blob" });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(content);
+            link.download = `画像リサイズくん_一括保存.zip`;
+            link.click();
+            showToast("ZIPファイルの書き出しを完了しました");
+        });
+
+        function showToast(message) {
+            toast.textContent = message;
+            toast.classList.remove('opacity-0');
+            setTimeout(() => {
+                toast.classList.add('opacity-0');
+            }, 3000);
+        }
+    </script>
+</body>
+
+</html>

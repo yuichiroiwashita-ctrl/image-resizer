@@ -14,14 +14,6 @@
             border-color: #3b82f6;
             background-color: #eff6ff;
         }
-        .option-card {
-            transition: all 0.2s ease;
-            cursor: pointer;
-        }
-        .option-card:hover {
-            border-color: #3b82f6;
-            background-color: #f8faff;
-        }
         input:checked + .option-content {
             border-color: #3b82f6;
             background-color: #eff6ff;
@@ -58,7 +50,6 @@
                 </div>
             </div>
 
-            <!-- 解説付き設定オプション -->
             <div class="mb-4 text-sm font-bold text-slate-700 flex items-center gap-2">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
                 どちらの方法でリサイズしますか？
@@ -71,28 +62,18 @@
                     <div class="p-4 border-2 border-slate-200 rounded-2xl bg-white peer-checked:border-blue-500 peer-checked:ring-4 peer-checked:ring-blue-50 transition-all h-full flex flex-col items-center text-center">
                         <div class="mb-4 bg-slate-100 p-2 rounded-xl w-full flex justify-center">
                             <svg width="160" height="100" viewBox="0 0 160 100">
-                                <!-- 背景の元画像 -->
-                                <rect x="10" y="10" width="140" height="80" rx="4" fill="#fca5a5" /> <!-- 元画像のサイズ感 -->
-                                <path d="M10 90 L50 40 L90 90 Z" fill="#ef4444" opacity="0.6"/> <!-- 山1 -->
-                                <path d="M60 90 L110 30 L150 90 Z" fill="#ef4444" opacity="0.8"/> <!-- 山2 -->
-                                <circle cx="120" cy="35" r="10" fill="#fcd34d" /> <!-- 太陽 -->
-                                
-                                <!-- 指定サイズの枠 (ターゲット) -->
+                                <rect x="10" y="10" width="140" height="80" rx="4" fill="#fca5a5" />
+                                <path d="M10 90 L50 40 L90 90 Z" fill="#ef4444" opacity="0.6"/>
+                                <path d="M60 90 L110 30 L150 90 Z" fill="#ef4444" opacity="0.8"/>
+                                <circle cx="120" cy="35" r="10" fill="#fcd34d" />
                                 <rect x="35" y="25" width="90" height="50" fill="none" stroke="#1e293b" stroke-width="3" stroke-dasharray="6,4" />
                                 <text x="80" y="55" text-anchor="middle" font-size="10" font-weight="extrabold" fill="#1e293b">指定サイズ</text>
-                                
-                                <!-- カットされる部分の目印 -->
                                 <rect x="10" y="10" width="25" height="80" fill="white" opacity="0.4" />
                                 <rect x="125" y="10" width="25" height="80" fill="white" opacity="0.4" />
-                                <text x="17" y="55" text-anchor="middle" font-size="8" font-weight="bold" fill="#ef4444" writing-mode="tb">カット</text>
-                                <text x="143" y="55" text-anchor="middle" font-size="8" font-weight="bold" fill="#ef4444" writing-mode="tb">カット</text>
                             </svg>
                         </div>
                         <span class="block text-lg font-bold text-slate-800">枠に合わせて切り取る</span>
-                        <span class="block text-xs text-slate-500 mt-2 leading-relaxed">
-                            指定したサイズを<span class="text-red-500 font-bold">隙間なく埋めます</span>。<br>
-                            サイズに合わない端っこは自動でカットされます。
-                        </span>
+                        <span class="block text-xs text-slate-500 mt-2 leading-relaxed">指定サイズを隙間なく埋めます。<br>はみ出た端はカットされます。</span>
                     </div>
                 </label>
 
@@ -102,31 +83,31 @@
                     <div class="p-4 border-2 border-slate-200 rounded-2xl bg-white peer-checked:border-blue-500 peer-checked:ring-4 peer-checked:ring-blue-50 transition-all h-full flex flex-col items-center text-center">
                         <div class="mb-4 bg-slate-100 p-2 rounded-xl w-full flex justify-center">
                             <svg width="160" height="100" viewBox="0 0 160 100">
-                                <!-- 指定サイズの枠 (ターゲット) -->
                                 <rect x="20" y="15" width="120" height="70" fill="white" stroke="#1e293b" stroke-width="2" stroke-dasharray="6,4" />
-                                
-                                <!-- 縮小された画像 -->
                                 <rect x="45" y="15" width="70" height="70" rx="2" fill="#93c5fd" />
                                 <path d="M45 85 L65 55 L85 85 Z" fill="#3b82f6" opacity="0.6"/>
                                 <path d="M70 85 L95 45 L115 85 Z" fill="#3b82f6" opacity="0.8"/>
                                 <circle cx="100" cy="35" r="6" fill="#fcd34d" />
-                                
-                                <!-- 余白の説明 -->
                                 <text x="32" y="53" text-anchor="middle" font-size="9" font-weight="bold" fill="#94a3b8">余白</text>
                                 <text x="128" y="53" text-anchor="middle" font-size="9" font-weight="bold" fill="#94a3b8">余白</text>
-                                <text x="80" y="10" text-anchor="middle" font-size="9" font-weight="bold" fill="#1e293b">指定サイズ</text>
                             </svg>
                         </div>
                         <span class="block text-lg font-bold text-slate-800">全体を収める</span>
-                        <span class="block text-xs text-slate-500 mt-2 leading-relaxed">
-                            元の画像を<span class="text-blue-500 font-bold">一切削らずに</span>縮小します。<br>
-                            サイズに合わない部分には白い余白ができます。
-                        </span>
+                        <span class="block text-xs text-slate-500 mt-2 leading-relaxed">元の画像を一切削らずに縮小します。<br>サイズに合わない所に余白ができます。</span>
                     </div>
                 </label>
             </div>
-            
-            <p class="text-xs text-slate-400 mt-6 text-center italic">※リサイズ方法を選んでから画像をアップロードしてください</p>
+        </div>
+
+        <!-- Privacy Warning -->
+        <div class="bg-amber-50 border border-amber-200 rounded-xl p-4 mb-6 flex items-start gap-3">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-amber-500 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+            </svg>
+            <div class="text-xs text-amber-800 leading-relaxed">
+                <p class="font-bold mb-1">【重要】プライバシーへの配慮をお願いします</p>
+                <p>お子様の名札や個人の特定につながる情報が写っている場合は、あらかじめ加工ソフト等で伏せ字処理を行ってください。このツールでは人物情報の自動削除機能は備えておりません。公開前に必ずご自身で内容をご確認ください。</p>
+            </div>
         </div>
 
         <!-- Drop Zone -->
@@ -138,7 +119,7 @@
                     </svg>
                 </div>
                 <p class="text-2xl text-slate-800 font-black">ここに画像をドロップ！</p>
-                <p class="text-sm text-slate-400 mt-2 font-medium">またはクリックしてファイルを選択（まとめて放り込めます）</p>
+                <p class="text-sm text-slate-400 mt-2 font-medium font-bold">複数枚まとめて一括処理できます</p>
             </div>
             <input type="file" id="fileInput" class="hidden" accept="image/*" multiple>
         </div>
@@ -147,34 +128,23 @@
         <div id="controls" class="hidden mb-6 flex justify-between items-center bg-white p-5 rounded-2xl shadow-sm border border-slate-200">
             <div class="text-slate-700 font-bold flex items-center gap-2">
                 <span class="bg-blue-600 text-white w-10 h-10 rounded-full flex items-center justify-center text-lg shadow-md" id="fileCount">0</span>
-                <span>枚の画像を加工しました</span>
+                <span>枚処理済み</span>
             </div>
             <div class="flex gap-3">
-                <button id="clearBtn" class="text-slate-400 hover:text-red-500 px-4 py-2 rounded-lg font-bold transition-colors text-sm">
-                    やり直し（クリア）
-                </button>
+                <button id="clearBtn" class="text-slate-400 hover:text-red-500 px-4 py-2 rounded-lg font-bold transition-colors text-sm">やり直し</button>
                 <button id="downloadAllBtn" class="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-2xl font-black transition-all flex items-center gap-2 shadow-xl shadow-blue-200 active:scale-95">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 20 20" fill="currentColor">
-                        <path fill-rule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clip-rule="evenodd" />
-                    </svg>
                     まとめて保存する
                 </button>
             </div>
         </div>
 
         <!-- Preview Area -->
-        <div id="previewContainer" class="grid grid-cols-1 gap-4 mb-16">
-            <!-- JavaScript will inject previews here -->
-        </div>
+        <div id="previewContainer" class="grid grid-cols-1 gap-4 mb-16"></div>
 
-        <!-- Toast Notification -->
-        <div id="toast" class="fixed bottom-8 left-1/2 -translate-x-1/2 bg-slate-900 text-white px-8 py-4 rounded-2xl shadow-2xl opacity-0 transition-all duration-300 pointer-events-none z-50 font-black translate-y-4">
-            メッセージ
-        </div>
+        <div id="toast" class="fixed bottom-8 left-1/2 -translate-x-1/2 bg-slate-900 text-white px-8 py-4 rounded-2xl shadow-2xl opacity-0 transition-all duration-300 pointer-events-none z-50 font-black translate-y-4"></div>
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
-
     <script>
         const dropZone = document.getElementById('dropZone');
         const fileInput = document.getElementById('fileInput');
@@ -189,50 +159,22 @@
 
         let processedImages = [];
 
-        // UI Events
         dropZone.addEventListener('click', () => fileInput.click());
-        
-        dropZone.addEventListener('dragover', (e) => {
-            e.preventDefault();
-            dropZone.classList.add('drag-over', 'scale-[1.02]');
-        });
-
-        dropZone.addEventListener('dragleave', () => {
-            dropZone.classList.remove('drag-over', 'scale-[1.02]');
-        });
-
-        dropZone.addEventListener('drop', (e) => {
-            e.preventDefault();
-            dropZone.classList.remove('drag-over', 'scale-[1.02]');
-            handleFiles(e.dataTransfer.files);
-        });
-
-        fileInput.addEventListener('change', (e) => {
-            handleFiles(e.target.files);
-        });
-
-        clearBtn.addEventListener('click', () => {
-            processedImages = [];
-            previewContainer.innerHTML = '';
-            controls.classList.add('hidden');
-            fileInput.value = '';
-        });
+        dropZone.addEventListener('dragover', (e) => { e.preventDefault(); dropZone.classList.add('drag-over', 'scale-[1.02]'); });
+        dropZone.addEventListener('dragleave', () => { dropZone.classList.remove('drag-over', 'scale-[1.02]'); });
+        dropZone.addEventListener('drop', (e) => { e.preventDefault(); dropZone.classList.remove('drag-over', 'scale-[1.02]'); handleFiles(e.dataTransfer.files); });
+        fileInput.addEventListener('change', (e) => { handleFiles(e.target.files); });
+        clearBtn.addEventListener('click', () => { processedImages = []; previewContainer.innerHTML = ''; controls.classList.add('hidden'); fileInput.value = ''; });
 
         async function handleFiles(files) {
             const imageFiles = Array.from(files).filter(file => file.type.startsWith('image/'));
             if (imageFiles.length === 0) return;
-
             const targetW = parseInt(inputWidth.value) || 1200;
             const targetH = parseInt(inputHeight.value) || 630;
             const mode = document.querySelector('input[name="resizeMode"]:checked').value;
-
             showToast(`${imageFiles.length}枚の画像を加工中...`);
             controls.classList.remove('hidden');
-            
-            for (const file of imageFiles) {
-                await processImage(file, targetW, targetH, mode === 'contain');
-            }
-            
+            for (const file of imageFiles) { await processImage(file, targetW, targetH, mode === 'contain'); }
             fileCountSpan.textContent = processedImages.length;
         }
 
@@ -244,37 +186,25 @@
                     img.onload = () => {
                         const canvas = document.createElement('canvas');
                         const ctx = canvas.getContext('2d');
-
                         let drawW, drawH, x, y;
-
                         if (isContain) {
-                            // 全体を入れる（アスペクト比維持）
                             const scale = Math.min(targetW / img.width, targetH / img.height);
                             drawW = img.width * scale;
                             drawH = img.height * scale;
-                            canvas.width = drawW;
-                            canvas.height = drawH;
-                            x = 0;
-                            y = 0;
+                            canvas.width = drawW; canvas.height = drawH;
+                            x = 0; y = 0;
                         } else {
-                            // 枠に合わせる（中央トリミング）
-                            canvas.width = targetW;
-                            canvas.height = targetH;
+                            canvas.width = targetW; canvas.height = targetH;
                             const scale = Math.max(targetW / img.width, targetH / img.height);
-                            drawW = img.width * scale;
-                            drawH = img.height * scale;
-                            x = (targetW / 2) - (drawW / 2);
-                            y = (targetH / 2) - (drawH / 2);
+                            drawW = img.width * scale; drawH = img.height * scale;
+                            x = (targetW / 2) - (drawW / 2); y = (targetH / 2) - (drawH / 2);
                         }
-
                         ctx.imageSmoothingEnabled = true;
                         ctx.imageSmoothingQuality = 'high';
                         ctx.drawImage(img, x, y, drawW, drawH);
-
                         const dataUrl = canvas.toDataURL('image/jpeg', 0.9);
                         const timestamp = new Date().getTime();
                         const fileName = `${Math.round(canvas.width)}x${Math.round(canvas.height)}_${timestamp}_${file.name.split('.')[0]}.jpg`;
-                        
                         processedImages.push({ name: fileName, data: dataUrl });
                         createPreviewElement(file.name, dataUrl, canvas.width, canvas.height, fileName);
                         resolve();
@@ -297,17 +227,10 @@
                         <p class="text-base font-black text-slate-800 truncate" title="${originalName}">${originalName}</p>
                         <div class="flex flex-wrap justify-center sm:justify-start gap-2 mt-2">
                             <span class="bg-blue-50 text-blue-600 px-3 py-1 rounded-full text-xs font-black border border-blue-100">${Math.round(w)} × ${Math.round(h)} px</span>
-                            <span class="bg-slate-50 text-slate-500 px-3 py-1 rounded-full text-xs font-bold border border-slate-100">JPEG</span>
                         </div>
                     </div>
                     <div class="flex-shrink-0 w-full sm:w-auto">
-                        <button onclick="downloadSingle('${dataUrl}', '${outputFileName}')" 
-                                class="w-full flex items-center justify-center gap-2 text-sm bg-slate-800 text-white hover:bg-blue-600 px-6 py-4 rounded-xl transition-all font-black active:scale-95 shadow-lg shadow-slate-100">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-                            </svg>
-                            保存
-                        </button>
+                        <button onclick="downloadSingle('${dataUrl}', '${outputFileName}')" class="w-full flex items-center justify-center gap-2 text-sm bg-slate-800 text-white hover:bg-blue-600 px-6 py-4 rounded-xl transition-all font-black active:scale-95 shadow-lg shadow-slate-100 font-bold">保存</button>
                     </div>
                 </div>
             `;
@@ -316,43 +239,25 @@
 
         window.downloadSingle = (url, name) => {
             const link = document.createElement('a');
-            link.href = url;
-            link.download = name;
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
+            link.href = url; link.download = name;
+            document.body.appendChild(link); link.click(); document.body.removeChild(link);
         };
 
         downloadAllBtn.addEventListener('click', async () => {
             if (processedImages.length === 0) return;
-            
             const zip = new JSZip();
-            processedImages.forEach(img => {
-                const imageData = img.data.split(',')[1];
-                zip.file(img.name, imageData, { base64: true });
-            });
-
+            processedImages.forEach(img => { const imageData = img.data.split(',')[1]; zip.file(img.name, imageData, { base64: true }); });
             const content = await zip.generateAsync({ type: "blob" });
             const link = document.createElement('a');
             link.href = URL.createObjectURL(content);
-            const zipTimestamp = new Date().getTime();
-            link.download = `加工済み画像_${zipTimestamp}.zip`;
-            
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-            
+            link.download = `リサイズ画像_${new Date().getTime()}.zip`;
+            document.body.appendChild(link); link.click(); document.body.removeChild(link);
             showToast("すべての画像をまとめました！");
         });
 
         function showToast(message) {
-            toast.textContent = message;
-            toast.classList.remove('opacity-0', 'translate-y-4');
-            toast.classList.add('opacity-100', 'translate-y-0');
-            setTimeout(() => {
-                toast.classList.add('opacity-0', 'translate-y-4');
-                toast.classList.remove('opacity-100', 'translate-y-0');
-            }, 3000);
+            toast.textContent = message; toast.classList.remove('opacity-0', 'translate-y-4'); toast.classList.add('opacity-100', 'translate-y-0');
+            setTimeout(() => { toast.classList.add('opacity-0', 'translate-y-4'); toast.classList.remove('opacity-100', 'translate-y-0'); }, 3000);
         }
     </script>
 </body>

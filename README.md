@@ -27,3 +27,4 @@ GitHub Pages: https://yuichiroiwashita-ctrl.github.io/image-resizer/
 
 - HTML / CSS / JavaScript（Canvas API）
 - GitHub Pages
+(テスト2: 権限修正後のクリーンな新規PRでの検証)

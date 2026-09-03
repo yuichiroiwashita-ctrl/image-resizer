@@ -27,3 +27,6 @@ GitHub Pages: https://yuichiroiwashita-ctrl.github.io/image-resizer/
 
 - HTML / CSS / JavaScript（Canvas API）
 - GitHub Pages
+## PRレビュー自動化
+
+このリポジトリはClaude Code ActionによるPR自動レビュー(full-autoティア)を導入しています。

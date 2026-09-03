@@ -30,3 +30,5 @@ GitHub Pages: https://yuichiroiwashita-ctrl.github.io/image-resizer/
 ## PRレビュー自動化
 
 このリポジトリはClaude Code ActionによるPR自動レビュー(full-autoティア)を導入しています。
+
+(テスト: 純粋なドキュメント変更のみ)
